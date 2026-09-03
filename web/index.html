@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Recetario Fit - Planificador de comidas saludables adaptado para hipotiroidismo. Recetas balanceadas, lista de compras y seguimiento nutricional.">
+  <meta name="theme-color" content="#3d7a5a">
+  <title>Recetario Fit 🌿 — Menú Saludable en Pareja</title>
+
+  <!-- Google Fonts: Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+
+  <!-- ═══ Loading Screen ═══ -->
+  <div id="loading-screen" class="loading-screen">
+    <div class="loading-spinner"></div>
+    <div class="loading-text">Cargando Recetario Fit 🌿</div>
+    <div class="loading-subtext">Preparando tu planificador de comidas saludables...</div>
+  </div>
+
+  <!-- ═══ Navbar ═══ -->
+  <nav class="navbar" id="navbar">
+    <div class="navbar__inner">
+      <div class="navbar__brand">
+        <span class="navbar__logo">🌿 Recetario Fit</span>
+        <span class="navbar__subtitle">Menú Saludable en Pareja 👫</span>
+      </div>
+      <div class="navbar__actions">
+        <button class="theme-toggle" id="theme-toggle" aria-label="Cambiar tema">
+          🌙
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ═══ Main Content ═══ -->
+  <main class="main-content">
+    <div class="container">
+
+      <!-- Stats Row -->
+      <div class="stats-row" id="stats-row"></div>
+
+
+      <!-- Tabs -->
+      <div class="tabs" id="tabs" role="tablist">
+        <button class="tab-btn active" data-tab="plan" role="tab" id="tab-plan">📋 Plan Semanal</button>
+        <button class="tab-btn" data-tab="recipes" role="tab" id="tab-recipes">🍳 Recetas</button>
+        <button class="tab-btn" data-tab="ingredients" role="tab" id="tab-ingredients">🥗 Ingredientes</button>
+        <button class="tab-btn" data-tab="shopping" role="tab" id="tab-shopping">🛒 Lista de Compras</button>
+      </div>
+
+      <!-- Tab Panels -->
+      <div id="tab-content">
+
+        <!-- Plan Semanal -->
+        <section id="panel-plan" class="tab-panel animate-fadeIn" role="tabpanel">
+          <div class="section-header">
+            <h1 class="section-header__title">Plan Semanal de Comidas 👫</h1>
+            <p class="section-header__subtitle">Menú para pareja de 5 días con medidas fáciles de cocina. Haz clic en cualquier plato para ver los ingredientes en tazas, cucharadas y unidades.</p>
+          </div>
+          <div class="meal-grid" id="meal-grid"></div>
+          <div class="day-totals" id="day-totals"></div>
+        </section>
+
+        <!-- Recetas -->
+        <section id="panel-recipes" class="tab-panel animate-fadeIn" role="tabpanel" style="display:none;">
+          <div class="section-header">
+            <h1 class="section-header__title">Recetas Saludables 🍳</h1>
+            <p class="section-header__subtitle">15 platos con medidas de cocina fáciles: tazas, cucharadas, filetes y unidades. Sin necesidad de pesar nada.</p>
+          </div>
+          <div class="filter-bar" id="recipe-filter-bar"></div>
+          <div class="recipe-grid" id="recipe-grid"></div>
+        </section>
+
+        <!-- Ingredientes -->
+        <section id="panel-ingredients" class="tab-panel animate-fadeIn" role="tabpanel" style="display:none;">
+          <div class="section-header">
+            <h1 class="section-header__title">Base de Ingredientes 🥗</h1>
+            <p class="section-header__subtitle">46 ingredientes con su medida casera equivalente e información nutricional.</p>
+          </div>
+          <div class="filter-bar" id="ingredient-filter-bar"></div>
+          <div style="overflow-x: auto;">
+            <table class="data-table" id="ingredient-table">
+              <thead>
+                <tr>
+                  <th>Ingrediente</th>
+                  <th>Medida Casera</th>
+                  <th>Categoría</th>
+                  <th>Calorías</th>
+                  <th>Proteína</th>
+                  <th>Alertas</th>
+                </tr>
+              </thead>
+              <tbody id="ingredient-tbody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Lista de Compras -->
+        <section id="panel-shopping" class="tab-panel animate-fadeIn" role="tabpanel" style="display:none;">
+          <div class="section-header">
+            <h1 class="section-header__title">Lista de Compras Semanal 🛒</h1>
+            <p class="section-header__subtitle">Lo que necesitas comprar para los 5 días, con medidas fáciles agrupadas por categoría.</p>
+          </div>
+          <div id="shopping-list"></div>
+        </section>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ═══ Modal ═══ -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal" id="recipe-modal" role="dialog" aria-modal="true">
+      <div style="position: relative;">
+        <button class="modal__close" id="modal-close" aria-label="Cerrar">✕</button>
+        <div id="modal-content"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ Toast Container ═══ -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- ═══ Footer ═══ -->
+  <footer class="footer">
+    <p>⚠️ Esta herramienta es de referencia informativa. Siempre consulta con tu médico endocrinólogo antes de modificar tu dieta.</p>
+    <p style="margin-top: var(--sp-2);">Hecho con 💚 — Recetario Fit 🌿 2026</p>
+  </footer>
+
+  <!-- ═══ Scripts ═══ -->
+  <script src="js/wasm_exec.js"></script>
+  <script>
+    // Inicializar Go WASM
+    const go = new Go();
+    window.wasmReady = false;
+
+    window.onWasmReady = function() {
+      window.wasmReady = true;
+      document.dispatchEvent(new Event('wasm-ready'));
+    };
+
+    WebAssembly.instantiateStreaming(fetch('main.wasm'), go.importObject)
+      .then(result => {
+        go.run(result.instance);
+      })
+      .catch(err => {
+        console.error('Error cargando WASM:', err);
+        document.getElementById('loading-screen').innerHTML =
+          '<div style="text-align:center;padding:2rem;"><h2>⚠️ Error al cargar</h2><p>No se pudo cargar el motor. Recarga la página.</p></div>';
+      });
+  </script>
+  <script src="js/app.js"></script>
+</body>
+</html>

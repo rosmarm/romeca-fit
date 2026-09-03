@@ -1,0 +1,54 @@
+name: Deploy Recetario Fit a GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: 📥 Checkout del repositorio
+        uses: actions/checkout@v4
+
+      - name: 🐹 Instalar Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.23'
+
+      - name: 🔨 Compilar Go a WebAssembly
+        run: |
+          GOOS=js GOARCH=wasm go build -o web/main.wasm ./cmd/wasm/
+          echo "✅ WASM compilado"
+          ls -lh web/main.wasm
+
+      - name: 📋 Copiar wasm_exec.js
+        run: |
+          cp "$(go env GOROOT)/misc/wasm/wasm_exec.js" web/js/wasm_exec.js
+          echo "✅ wasm_exec.js copiado"
+
+      - name: 📦 Configurar GitHub Pages
+        uses: actions/configure-pages@v4
+
+      - name: 📤 Subir artefacto de Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: 'web'
+
+      - name: 🚀 Desplegar en GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

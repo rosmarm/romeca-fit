@@ -1,0 +1,266 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   RECETARIO FIT 🌿 — Design System (styles.css)
+   Paleta botánica / salud con modo oscuro
+   ═══════════════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+/* ── Design Tokens ──────────────────────────────────────────────────── */
+:root {
+  /* Paleta Principal */
+  --clr-primary:        hsl(150, 35%, 35%);
+  --clr-primary-light:  hsl(150, 40%, 55%);
+  --clr-primary-dark:   hsl(150, 35%, 25%);
+  --clr-primary-alpha:  hsla(150, 35%, 35%, 0.12);
+
+  /* Acento Cálido */
+  --clr-accent:         hsl(16, 65%, 55%);
+  --clr-accent-light:   hsl(16, 70%, 70%);
+  --clr-accent-alpha:   hsla(16, 65%, 55%, 0.12);
+
+  /* Fondos y Superficies */
+  --clr-bg:             hsl(60, 20%, 97%);
+  --clr-surface:        hsl(0, 0%, 100%);
+  --clr-surface-hover:  hsl(150, 15%, 96%);
+  --clr-surface-raised: hsl(0, 0%, 100%);
+
+  /* Texto */
+  --clr-text:           hsl(0, 0%, 15%);
+  --clr-text-secondary: hsl(0, 0%, 40%);
+  --clr-text-muted:     hsl(0, 0%, 55%);
+  --clr-text-inverse:   hsl(0, 0%, 100%);
+
+  /* Estado */
+  --clr-success:        hsl(142, 50%, 45%);
+  --clr-success-light:  hsl(142, 50%, 92%);
+  --clr-warning:        hsl(38, 90%, 55%);
+  --clr-warning-light:  hsl(38, 90%, 92%);
+  --clr-danger:         hsl(0, 70%, 55%);
+  --clr-danger-light:   hsl(0, 70%, 93%);
+  --clr-info:           hsl(210, 70%, 55%);
+  --clr-info-light:     hsl(210, 70%, 93%);
+
+  /* Categorías de ingredientes */
+  --clr-cat-verdura:     hsl(142, 50%, 42%);
+  --clr-cat-fruta:       hsl(340, 60%, 55%);
+  --clr-cat-proteina:    hsl(25, 70%, 50%);
+  --clr-cat-grano:       hsl(42, 65%, 50%);
+  --clr-cat-especia:     hsl(280, 45%, 55%);
+  --clr-cat-grasa:       hsl(85, 45%, 45%);
+  --clr-cat-lacteo:      hsl(200, 55%, 55%);
+
+  /* Bordes */
+  --clr-border:         hsl(0, 0%, 90%);
+  --clr-border-light:   hsl(0, 0%, 94%);
+
+  /* Tipografía */
+  --font-family:        'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --fs-xs:    0.75rem;
+  --fs-sm:    0.875rem;
+  --fs-base:  1rem;
+  --fs-md:    1.125rem;
+  --fs-lg:    1.25rem;
+  --fs-xl:    1.5rem;
+  --fs-2xl:   2rem;
+  --fs-3xl:   2.5rem;
+  --fw-light:    300;
+  --fw-regular:  400;
+  --fw-medium:   500;
+  --fw-semibold: 600;
+  --fw-bold:     700;
+  --lh-tight:    1.2;
+  --lh-normal:   1.5;
+  --lh-relaxed:  1.7;
+
+  /* Espaciado */
+  --sp-1:  0.25rem;
+  --sp-2:  0.5rem;
+  --sp-3:  0.75rem;
+  --sp-4:  1rem;
+  --sp-5:  1.25rem;
+  --sp-6:  1.5rem;
+  --sp-8:  2rem;
+  --sp-10: 2.5rem;
+  --sp-12: 3rem;
+  --sp-16: 4rem;
+
+  /* Bordes Redondeados */
+  --radius-sm:   8px;
+  --radius-md:   12px;
+  --radius-lg:   16px;
+  --radius-xl:   24px;
+  --radius-full: 9999px;
+
+  /* Sombras */
+  --shadow-xs:   0 1px 2px hsla(0,0%,0%,0.04);
+  --shadow-sm:   0 1px 3px hsla(0,0%,0%,0.06), 0 1px 2px hsla(0,0%,0%,0.04);
+  --shadow-md:   0 4px 6px hsla(0,0%,0%,0.06), 0 2px 4px hsla(0,0%,0%,0.04);
+  --shadow-lg:   0 10px 15px hsla(0,0%,0%,0.06), 0 4px 6px hsla(0,0%,0%,0.04);
+  --shadow-xl:   0 20px 25px hsla(0,0%,0%,0.08), 0 8px 10px hsla(0,0%,0%,0.04);
+  --shadow-glow: 0 0 20px hsla(150, 40%, 55%, 0.25);
+
+  /* Transiciones */
+  --ease-out:   cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in:    cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast:   150ms;
+  --duration-normal: 250ms;
+  --duration-slow:   400ms;
+
+  /* Layout */
+  --max-width: 1200px;
+  --navbar-height: 64px;
+}
+
+/* ── Modo Oscuro ────────────────────────────────────────────────────── */
+[data-theme="dark"] {
+  --clr-bg:             hsl(220, 20%, 10%);
+  --clr-surface:        hsl(220, 18%, 14%);
+  --clr-surface-hover:  hsl(220, 18%, 18%);
+  --clr-surface-raised: hsl(220, 18%, 17%);
+  --clr-text:           hsl(0, 0%, 92%);
+  --clr-text-secondary: hsl(0, 0%, 70%);
+  --clr-text-muted:     hsl(0, 0%, 50%);
+  --clr-border:         hsl(220, 15%, 22%);
+  --clr-border-light:   hsl(220, 15%, 18%);
+  --clr-primary-alpha:  hsla(150, 40%, 55%, 0.15);
+  --clr-accent-alpha:   hsla(16, 65%, 55%, 0.15);
+  --shadow-xs:   0 1px 2px hsla(0,0%,0%,0.2);
+  --shadow-sm:   0 1px 3px hsla(0,0%,0%,0.3);
+  --shadow-md:   0 4px 6px hsla(0,0%,0%,0.3);
+  --shadow-lg:   0 10px 15px hsla(0,0%,0%,0.3);
+  --shadow-xl:   0 20px 25px hsla(0,0%,0%,0.4);
+  --shadow-glow: 0 0 20px hsla(150, 40%, 55%, 0.15);
+}
+
+/* ── Reset Global ───────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: var(--fs-base);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-normal);
+  color: var(--clr-text);
+  background-color: var(--clr-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  transition: background-color var(--duration-slow) var(--ease-smooth),
+              color var(--duration-slow) var(--ease-smooth);
+}
+
+img { max-width: 100%; display: block; }
+a { color: var(--clr-primary); text-decoration: none; }
+a:hover { color: var(--clr-primary-light); }
+button { cursor: pointer; font-family: inherit; }
+input, select, textarea { font-family: inherit; font-size: inherit; }
+ul, ol { list-style: none; }
+
+/* ── Tipografía ─────────────────────────────────────────────────────── */
+h1 { font-size: var(--fs-3xl); font-weight: var(--fw-bold); line-height: var(--lh-tight); }
+h2 { font-size: var(--fs-2xl); font-weight: var(--fw-bold); line-height: var(--lh-tight); }
+h3 { font-size: var(--fs-xl);  font-weight: var(--fw-semibold); }
+h4 { font-size: var(--fs-lg);  font-weight: var(--fw-semibold); }
+h5 { font-size: var(--fs-md);  font-weight: var(--fw-medium); }
+
+/* ── Contenedores ───────────────────────────────────────────────────── */
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--sp-6);
+}
+
+.main-content {
+  padding-top: calc(var(--navbar-height) + var(--sp-8));
+  padding-bottom: var(--sp-16);
+  min-height: 100vh;
+}
+
+/* ── Utilidades ─────────────────────────────────────────────────────── */
+.text-center    { text-align: center; }
+.text-muted     { color: var(--clr-text-muted); }
+.text-secondary { color: var(--clr-text-secondary); }
+.text-primary   { color: var(--clr-primary); }
+.text-accent    { color: var(--clr-accent); }
+.fw-medium      { font-weight: var(--fw-medium); }
+.fw-semibold    { font-weight: var(--fw-semibold); }
+.fw-bold        { font-weight: var(--fw-bold); }
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+
+.flex            { display: flex; }
+.flex-col        { flex-direction: column; }
+.flex-wrap       { flex-wrap: wrap; }
+.items-center    { align-items: center; }
+.justify-center  { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.gap-1           { gap: var(--sp-1); }
+.gap-2           { gap: var(--sp-2); }
+.gap-3           { gap: var(--sp-3); }
+.gap-4           { gap: var(--sp-4); }
+.gap-6           { gap: var(--sp-6); }
+.gap-8           { gap: var(--sp-8); }
+
+/* ── Animaciones ────────────────────────────────────────────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.05); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.animate-fadeIn      { animation: fadeIn var(--duration-normal) var(--ease-out); }
+.animate-slideUp     { animation: slideUp var(--duration-slow) var(--ease-out); }
+.animate-slideRight  { animation: slideInRight var(--duration-slow) var(--ease-out); }
+
+/* ── Gradientes Decorativos ─────────────────────────────────────────── */
+.gradient-primary {
+  background: linear-gradient(135deg, var(--clr-primary), var(--clr-primary-light));
+}
+
+.gradient-accent {
+  background: linear-gradient(135deg, var(--clr-accent), var(--clr-accent-light));
+}
+
+.gradient-hero {
+  background: linear-gradient(135deg,
+    hsla(150, 35%, 35%, 0.08) 0%,
+    hsla(16, 65%, 55%, 0.05) 50%,
+    hsla(150, 40%, 55%, 0.08) 100%
+  );
+}
