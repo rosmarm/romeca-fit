@@ -9,6 +9,7 @@ permissions:
   contents: read
   pages: write
   id-token: write
+  administration: write
 
 concurrency:
   group: "pages"
@@ -43,6 +44,8 @@ jobs:
 
       - name: 📦 Configurar GitHub Pages
         uses: actions/configure-pages@v4
+        with:
+          enablement: true
 
       - name: 📤 Subir artefacto de Pages
         uses: actions/upload-pages-artifact@v3
