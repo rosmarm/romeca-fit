@@ -1,39 +1,131 @@
 <!DOCTYPE html>
-<html lang="es" data-theme="light">
+<html lang="es" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Recetario Fit - Planificador de comidas saludables adaptado para hipotiroidismo. Recetas balanceadas, lista de compras y seguimiento nutricional.">
-  <meta name="theme-color" content="#3d7a5a">
-  <title>Recetario Fit 🌿 — Menú Saludable en Pareja</title>
+  <meta name="description" content="Romeca-Fit: El Universo de las Recetas Saludables. Planificador de comidas fit adaptado para hipotiroidismo, con recetas balanceadas, lista de compras y seguimiento nutricional en pareja.">
+  <meta name="theme-color" content="#059669">
+  <title>🌿 Romeca-Fit — El Universo de las Recetas Saludables</title>
 
-  <!-- Google Fonts: Outfit -->
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <!-- Estilos -->
-  <link rel="stylesheet" href="css/styles.css">
-  <link rel="stylesheet" href="css/components.css">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Outfit', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            'fit': {
+              50:  '#f0fdf6',
+              100: '#dcfce9',
+              200: '#bbf7d3',
+              300: '#86efac',
+              400: '#4ade80',
+              500: '#22c55e',
+              600: '#16a34a',
+              700: '#15803d',
+              800: '#166534',
+              900: '#14532d',
+            },
+            'amber': {
+              50:  '#fffbeb',
+              100: '#fef3c7',
+              200: '#fde68a',
+              300: '#fcd34d',
+              400: '#fbbf24',
+              500: '#f59e0b',
+              600: '#d97706',
+              700: '#b45309',
+            },
+          },
+          animation: {
+            'fade-in':   'fadeIn 0.3s ease-out',
+            'slide-up':  'slideUp 0.4s ease-out',
+            'spin-slow': 'spin 1.2s linear infinite',
+            'pulse-soft':'pulseSoft 2s ease-in-out infinite',
+          },
+          keyframes: {
+            fadeIn:    { from: { opacity: '0' }, to: { opacity: '1' } },
+            slideUp:   { from: { opacity: '0', transform: 'translateY(16px)' }, to: { opacity: '1', transform: 'translateY(0)' } },
+            pulseSoft: { '0%,100%': { transform: 'scale(1)' }, '50%': { transform: 'scale(1.03)' } },
+          },
+          backdropBlur: { xs: '4px' },
+          boxShadow: {
+            'glow-fit': '0 0 20px rgba(34,197,94,0.25)',
+            'glow-amber': '0 0 20px rgba(245,158,11,0.2)',
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Outfit', system-ui, sans-serif; }
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #86efac; border-radius: 999px; }
+    .dark ::-webkit-scrollbar-thumb { background: #16a34a; }
+    /* Tab content animation */
+    .tab-panel { animation: fadeIn 0.3s ease-out; }
+    @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+    /* Spinner */
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spinner { animation: spin 0.9s linear infinite; }
+    /* Checkbox custom */
+    input[type=checkbox]:checked { background-color: #16a34a; border-color: #16a34a; }
+    input[type=checkbox]:checked::after { content: "✓"; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: 700; width: 100%; height: 100%; }
+    input[type=checkbox] { appearance: none; -webkit-appearance: none; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+    /* Nutrition bar animation */
+    .bar-fill { transition: width 0.8s cubic-bezier(0.16,1,0.3,1); }
+    /* Meal grid responsive */
+    .meal-grid { display: grid; grid-template-columns: 80px repeat(5, 1fr); gap: 10px; overflow-x: auto; min-width: 0; }
+    @media (max-width: 768px) { .meal-grid { grid-template-columns: 70px repeat(5, minmax(140px, 1fr)); } }
+    /* Modal scroll */
+    .modal-inner { max-height: calc(100vh - 80px); overflow-y: auto; }
+    /* Gradient hero */
+    .hero-gradient { background: linear-gradient(135deg, rgba(34,197,94,0.08) 0%, rgba(245,158,11,0.05) 50%, rgba(22,163,74,0.06) 100%); }
+    /* Glass navbar */
+    .glass { background: rgba(255,255,255,0.75); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+    .dark .glass { background: rgba(17,24,39,0.85); }
+  </style>
 </head>
-<body>
+<body class="bg-slate-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 min-h-screen transition-colors duration-300">
 
   <!-- ═══ Loading Screen ═══ -->
-  <div id="loading-screen" class="loading-screen">
-    <div class="loading-spinner"></div>
-    <div class="loading-text">Cargando Recetario Fit 🌿</div>
-    <div class="loading-subtext">Preparando tu planificador de comidas saludables...</div>
+  <div id="loading-screen" class="fixed inset-0 z-50 flex flex-col items-center justify-center gap-6 bg-slate-50 dark:bg-gray-950 transition-opacity duration-500">
+    <div class="relative">
+      <div class="w-16 h-16 rounded-full border-4 border-fit-200 dark:border-fit-900 border-t-fit-500 spinner"></div>
+      <span class="absolute inset-0 flex items-center justify-center text-2xl">🌿</span>
+    </div>
+    <div class="text-center">
+      <div class="text-xl font-bold text-fit-700 dark:text-fit-400">Romeca-Fit</div>
+      <div class="text-sm text-gray-400 dark:text-gray-500 mt-1">Preparando tu universo de recetas saludables…</div>
+    </div>
   </div>
 
   <!-- ═══ Navbar ═══ -->
-  <nav class="navbar" id="navbar">
-    <div class="navbar__inner">
-      <div class="navbar__brand">
-        <span class="navbar__logo">🌿 Recetario Fit</span>
-        <span class="navbar__subtitle">Menú Saludable en Pareja 👫</span>
+  <nav class="glass fixed top-0 left-0 right-0 z-40 border-b border-fit-100 dark:border-gray-800 h-16" id="navbar">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-full flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-fit-500 to-fit-700 flex items-center justify-center text-white text-lg shadow-md">🌿</div>
+        <div>
+          <div class="font-extrabold text-lg leading-none text-fit-700 dark:text-fit-400 tracking-tight">Romeca-Fit</div>
+          <div class="text-xs text-gray-400 dark:text-gray-500 hidden sm:block font-light">El Universo de las Recetas Saludables</div>
+        </div>
       </div>
-      <div class="navbar__actions">
-        <button class="theme-toggle" id="theme-toggle" aria-label="Cambiar tema">
+      <div class="flex items-center gap-2">
+        <span class="hidden sm:flex items-center gap-1.5 text-xs text-gray-400 dark:text-gray-500 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-full px-3 py-1.5 font-medium">
+          👫 Menú en Pareja
+        </span>
+        <button id="theme-toggle" class="w-9 h-9 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center text-base hover:border-fit-400 hover:bg-fit-50 dark:hover:bg-gray-700 transition-all duration-200 hover:rotate-12">
           🌙
         </button>
       </div>
@@ -41,73 +133,93 @@
   </nav>
 
   <!-- ═══ Main Content ═══ -->
-  <main class="main-content">
-    <div class="container">
+  <main class="pt-20 pb-16 min-h-screen">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
 
-      <!-- Stats Row -->
-      <div class="stats-row" id="stats-row"></div>
-
+      <!-- Hero Banner -->
+      <div class="hero-gradient rounded-2xl sm:rounded-3xl border border-fit-100 dark:border-fit-900/40 p-6 sm:p-8 mb-8 mt-2 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-48 h-48 rounded-full bg-fit-100 dark:bg-fit-900/20 -translate-y-1/2 translate-x-1/2 opacity-60 pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 w-32 h-32 rounded-full bg-amber-100 dark:bg-amber-900/10 translate-y-1/2 -translate-x-1/2 opacity-50 pointer-events-none"></div>
+        <div class="relative">
+          <h1 class="text-2xl sm:text-3xl font-extrabold text-fit-800 dark:text-fit-300 leading-tight mb-1 tracking-tight">
+            🌿 Romeca-Fit
+          </h1>
+          <p class="text-sm sm:text-base text-gray-500 dark:text-gray-400 font-light mb-6 max-w-lg">
+            El Universo de las Recetas Saludables · Planificado para hipotiroidismo · 5 días · 2 personas
+          </p>
+          <!-- Stats Row -->
+          <div id="stats-row" class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4"></div>
+        </div>
+      </div>
 
       <!-- Tabs -->
-      <div class="tabs" id="tabs" role="tablist">
-        <button class="tab-btn active" data-tab="plan" role="tab" id="tab-plan">📋 Plan Semanal</button>
-        <button class="tab-btn" data-tab="recipes" role="tab" id="tab-recipes">🍳 Recetas</button>
-        <button class="tab-btn" data-tab="ingredients" role="tab" id="tab-ingredients">🥗 Ingredientes</button>
-        <button class="tab-btn" data-tab="shopping" role="tab" id="tab-shopping">🛒 Lista de Compras</button>
+      <div class="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-2xl p-1.5 flex gap-1 mb-6 overflow-x-auto shadow-sm" id="tabs" role="tablist">
+        <button class="tab-btn flex-1 min-w-max flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 bg-fit-600 text-white shadow-md" data-tab="plan" role="tab" id="tab-plan">
+          📋 <span>Plan Semanal</span>
+        </button>
+        <button class="tab-btn flex-1 min-w-max flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-200" data-tab="recipes" role="tab" id="tab-recipes">
+          🍳 <span>Recetas</span>
+        </button>
+        <button class="tab-btn flex-1 min-w-max flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-200" data-tab="ingredients" role="tab" id="tab-ingredients">
+          🥗 <span>Ingredientes</span>
+        </button>
+        <button class="tab-btn flex-1 min-w-max flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-200" data-tab="shopping" role="tab" id="tab-shopping">
+          🛒 <span>Lista de Compras</span>
+        </button>
       </div>
 
       <!-- Tab Panels -->
       <div id="tab-content">
 
         <!-- Plan Semanal -->
-        <section id="panel-plan" class="tab-panel animate-fadeIn" role="tabpanel">
-          <div class="section-header">
-            <h1 class="section-header__title">Plan Semanal de Comidas 👫</h1>
-            <p class="section-header__subtitle">Menú para pareja de 5 días con medidas fáciles de cocina. Haz clic en cualquier plato para ver los ingredientes en tazas, cucharadas y unidades.</p>
+        <section id="panel-plan" class="tab-panel" role="tabpanel">
+          <div class="mb-6">
+            <h2 class="text-xl font-bold text-gray-800 dark:text-gray-100 mb-1">Plan Semanal de Comidas 👫</h2>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Menú para pareja de 5 días con medidas fáciles de cocina. Haz clic en cualquier plato para ver los ingredientes en tazas, cucharadas y unidades.</p>
           </div>
-          <div class="meal-grid" id="meal-grid"></div>
-          <div class="day-totals" id="day-totals"></div>
+          <div class="meal-grid mb-6" id="meal-grid"></div>
+          <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 mt-4" id="day-totals"></div>
         </section>
 
         <!-- Recetas -->
-        <section id="panel-recipes" class="tab-panel animate-fadeIn" role="tabpanel" style="display:none;">
-          <div class="section-header">
-            <h1 class="section-header__title">Recetas Saludables 🍳</h1>
-            <p class="section-header__subtitle">15 platos con medidas de cocina fáciles: tazas, cucharadas, filetes y unidades. Sin necesidad de pesar nada.</p>
+        <section id="panel-recipes" class="tab-panel hidden" role="tabpanel">
+          <div class="mb-6">
+            <h2 class="text-xl font-bold text-gray-800 dark:text-gray-100 mb-1">Recetas Saludables 🍳</h2>
+            <p class="text-sm text-gray-500 dark:text-gray-400">15 platos con medidas de cocina fáciles: tazas, cucharadas, filetes y unidades. Sin necesidad de pesar nada.</p>
           </div>
-          <div class="filter-bar" id="recipe-filter-bar"></div>
-          <div class="recipe-grid" id="recipe-grid"></div>
+          <div id="recipe-filter-bar" class="flex flex-wrap gap-2 mb-6"></div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="recipe-grid"></div>
         </section>
 
         <!-- Ingredientes -->
-        <section id="panel-ingredients" class="tab-panel animate-fadeIn" role="tabpanel" style="display:none;">
-          <div class="section-header">
-            <h1 class="section-header__title">Base de Ingredientes 🥗</h1>
-            <p class="section-header__subtitle">46 ingredientes con su medida casera equivalente e información nutricional.</p>
+        <section id="panel-ingredients" class="tab-panel hidden" role="tabpanel">
+          <div class="mb-6">
+            <h2 class="text-xl font-bold text-gray-800 dark:text-gray-100 mb-1">Base de Ingredientes 🥗</h2>
+            <p class="text-sm text-gray-500 dark:text-gray-400">46 ingredientes con su medida casera equivalente e información nutricional.</p>
           </div>
-          <div class="filter-bar" id="ingredient-filter-bar"></div>
-          <div style="overflow-x: auto;">
-            <table class="data-table" id="ingredient-table">
+          <div id="ingredient-filter-bar" class="flex flex-wrap gap-2 mb-6"></div>
+          <div class="overflow-x-auto rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm">
+            <table class="w-full text-sm" id="ingredient-table">
               <thead>
-                <tr>
-                  <th>Ingrediente</th>
-                  <th>Medida Casera</th>
-                  <th>Categoría</th>
-                  <th>Calorías</th>
-                  <th>Proteína</th>
-                  <th>Alertas</th>
+                <tr class="bg-fit-50 dark:bg-fit-900/20 border-b border-fit-100 dark:border-fit-900/40">
+                  <th class="text-left px-4 py-3 text-xs font-semibold text-fit-700 dark:text-fit-400 uppercase tracking-wider">Ingrediente</th>
+                  <th class="text-left px-4 py-3 text-xs font-semibold text-fit-700 dark:text-fit-400 uppercase tracking-wider">Medida Casera</th>
+                  <th class="text-left px-4 py-3 text-xs font-semibold text-fit-700 dark:text-fit-400 uppercase tracking-wider">Categoría</th>
+                  <th class="text-left px-4 py-3 text-xs font-semibold text-fit-700 dark:text-fit-400 uppercase tracking-wider">Calorías</th>
+                  <th class="text-left px-4 py-3 text-xs font-semibold text-fit-700 dark:text-fit-400 uppercase tracking-wider">Proteína</th>
+                  <th class="text-left px-4 py-3 text-xs font-semibold text-fit-700 dark:text-fit-400 uppercase tracking-wider">Alertas</th>
                 </tr>
               </thead>
-              <tbody id="ingredient-tbody"></tbody>
+              <tbody id="ingredient-tbody" class="divide-y divide-gray-50 dark:divide-gray-800 bg-white dark:bg-gray-900"></tbody>
             </table>
           </div>
         </section>
 
         <!-- Lista de Compras -->
-        <section id="panel-shopping" class="tab-panel animate-fadeIn" role="tabpanel" style="display:none;">
-          <div class="section-header">
-            <h1 class="section-header__title">Lista de Compras Semanal 🛒</h1>
-            <p class="section-header__subtitle">Lo que necesitas comprar para los 5 días, con medidas fáciles agrupadas por categoría.</p>
+        <section id="panel-shopping" class="tab-panel hidden" role="tabpanel">
+          <div class="mb-6">
+            <h2 class="text-xl font-bold text-gray-800 dark:text-gray-100 mb-1">Lista de Compras Semanal 🛒</h2>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Lo que necesitas comprar para los 5 días, con medidas fáciles agrupadas por categoría.</p>
           </div>
           <div id="shopping-list"></div>
         </section>
@@ -117,44 +229,46 @@
   </main>
 
   <!-- ═══ Modal ═══ -->
-  <div class="modal-overlay" id="modal-overlay">
-    <div class="modal" id="recipe-modal" role="dialog" aria-modal="true">
-      <div style="position: relative;">
-        <button class="modal__close" id="modal-close" aria-label="Cerrar">✕</button>
+  <div class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/50 backdrop-blur-sm opacity-0 invisible transition-all duration-250" id="modal-overlay">
+    <div class="bg-white dark:bg-gray-900 rounded-3xl w-full max-w-xl shadow-2xl scale-95 transition-all duration-250" id="recipe-modal" role="dialog" aria-modal="true">
+      <div class="relative modal-inner rounded-3xl p-6 sm:p-8">
+        <button class="absolute top-4 right-4 w-9 h-9 rounded-full bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center text-gray-500 hover:bg-red-50 dark:hover:bg-red-900/30 hover:text-red-500 hover:border-red-200 transition-all duration-150 z-10" id="modal-close" aria-label="Cerrar">✕</button>
         <div id="modal-content"></div>
       </div>
     </div>
   </div>
 
   <!-- ═══ Toast Container ═══ -->
-  <div class="toast-container" id="toast-container"></div>
+  <div class="fixed bottom-6 right-6 z-50 flex flex-col gap-2" id="toast-container"></div>
 
   <!-- ═══ Footer ═══ -->
-  <footer class="footer">
-    <p>⚠️ Esta herramienta es de referencia informativa. Siempre consulta con tu médico endocrinólogo antes de modificar tu dieta.</p>
-    <p style="margin-top: var(--sp-2);">Hecho con 💚 — Recetario Fit 🌿 2026</p>
+  <footer class="border-t border-gray-100 dark:border-gray-800 bg-white/60 dark:bg-gray-900/60 backdrop-blur-sm mt-8 py-6 text-center">
+    <p class="text-xs text-gray-400 dark:text-gray-500 max-w-md mx-auto px-4">
+      ⚠️ Esta herramienta es de referencia informativa. Consulta siempre con tu médico endocrinólogo antes de modificar tu dieta.
+    </p>
+    <p class="text-xs text-fit-500 dark:text-fit-400 mt-2 font-medium">Hecho con 💚 por Romeca-Fit 🌿 · 2026</p>
   </footer>
 
   <!-- ═══ Scripts ═══ -->
   <script src="js/wasm_exec.js"></script>
   <script>
-    // Inicializar Go WASM
+    // ── Dark Mode (init antes del render) ───────────────────────────────
+    const savedTheme = localStorage.getItem('rf-theme') || 'light';
+    if (savedTheme === 'dark') document.documentElement.classList.add('dark');
+
+    // ── Inicializar Go WASM ─────────────────────────────────────────────
     const go = new Go();
     window.wasmReady = false;
-
-    window.onWasmReady = function() {
+    window.onWasmReady = function () {
       window.wasmReady = true;
       document.dispatchEvent(new Event('wasm-ready'));
     };
-
     WebAssembly.instantiateStreaming(fetch('main.wasm'), go.importObject)
-      .then(result => {
-        go.run(result.instance);
-      })
+      .then(result => { go.run(result.instance); })
       .catch(err => {
         console.error('Error cargando WASM:', err);
         document.getElementById('loading-screen').innerHTML =
-          '<div style="text-align:center;padding:2rem;"><h2>⚠️ Error al cargar</h2><p>No se pudo cargar el motor. Recarga la página.</p></div>';
+          '<div class="text-center p-8"><h2 class="text-xl font-bold text-red-500 mb-2">⚠️ Error al cargar</h2><p class="text-gray-500 text-sm">No se pudo cargar el motor. Recarga la página.</p></div>';
       });
   </script>
   <script src="js/app.js"></script>
